@@ -1,0 +1,1 @@
+<h1>We have sent you a verification link on your email-id. Click the link To Activate your Account</h1>

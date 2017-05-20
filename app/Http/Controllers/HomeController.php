@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+//use App\CompanyUser;
+use App\Company;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
@@ -22,7 +24,10 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('home');
+    {//   Auth::companies()->count()->get();
+        // dd(Auth::id());
+       // $company = CompanyUser::where('user_id',Auth::id())->get();
+        $company = Company::where('user_id',Auth::id())->get();
+        return view('home',compact("company"));
     }
 }

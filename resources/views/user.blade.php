@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Create New User <a href="{{route('home')}}">Home</a></div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('create_user_store') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -60,23 +60,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                            <label for="role_id" class="col-md-4 control-label">I Want To Register As</label>
-
-                            <div class="col-md-6">
-
-                                <select id = 'role_id' class="form-control" name = 'role_id'>         
-                                        <option value = 4>Job Seeker</option>                
-                                        <option value = 5>Job Provider</option>                
-                                </select>                              
-
-                                @if ($errors->has('role_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('role_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

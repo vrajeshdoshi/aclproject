@@ -1,17 +1,45 @@
-@extends('layouts.app')
+@extends('master.app')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Register Job Provider <a href="{{route('home')}}">Home</a></div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{route('register_provider_store')}}">
                         {{ csrf_field() }}
 
+                        <div class="form-group{{ $errors->has('company') ? ' has-error' : '' }}">
+                            <label for="company" class="col-md-4 control-label">Company Name</label>
+
+                            <div class="col-md-6">
+                                <input id="company" type="text" class="form-control" name="company" value="{{ old('company') }}" required autofocus>
+
+                                @if ($errors->has('company'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('comp_desc') ? ' has-error' : '' }}">
+                            <label for="comp_desc" class="col-md-4 control-label">Company Description</label>
+
+                            <div class="col-md-6">
+                                <input id="comp_desc" type="text" class="form-control" name="comp_desc" value="{{ old('comp_desc') }}" required autofocus>
+
+                                @if ($errors->has('comp_desc'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('comp_desc') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                            <label for="name" class="col-md-4 control-label">Owner/Proprietor Name</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -57,24 +85,6 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                            <label for="role_id" class="col-md-4 control-label">I Want To Register As</label>
-
-                            <div class="col-md-6">
-
-                                <select id = 'role_id' class="form-control" name = 'role_id'>         
-                                        <option value = 4>Job Seeker</option>                
-                                        <option value = 5>Job Provider</option>                
-                                </select>                              
-
-                                @if ($errors->has('role_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('role_id') }}</strong>
-                                    </span>
-                                @endif
                             </div>
                         </div>
 
