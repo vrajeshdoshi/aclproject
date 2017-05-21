@@ -60,25 +60,19 @@
                         <tr>
                             <th>Verified</th>
                             <td>{{$job['info']->verified}}</td>
-                        </tr>
-
-                        <tr>
-                            <th>Posted By</th>
-                            <td>{{$job['user']}}</td>
-                        </tr>
+                        </tr>                        
 
                         <tr>
                             <th>Posted On</th>
                             <td>{{$job['info']->created_at}}</td>
                         </tr>
 
-@ifUserCan('alljobpost.delete|alljobpost.edit')
                         <tr>
 
                             <td><a href="{{ route('edit_post',$job['info']->id) }}">Edit</a></td>
                             <td><a href="{{ route('delete_jobpost',$job['info']->id) }}">Delete</a></td>                            
                         </tr>
-@endif
+
                     </table>
                     <br>
                     <br>

@@ -12,7 +12,6 @@
 			{{csrf_field()}}
 			{{method_field('PUT')}}
 		  <div class="form-group">
-		  {{$job->category_id}}
 		    <label for="name">Job Title</label>
 		    <input type="text" class="form-control" id="name" name="name" value = "{{$job->name}}">
 		  </div>
@@ -96,7 +95,7 @@
 		    <label for="package">Package</label>
 		    <input type="text" class="form-control" id="package" name="package" value = "{{$job->package}}">
 		  </div> 
-
+@ifUserCan('alljobpost.edit')
 		  <div class="form-group">
 		    <label for="verified">Verified</label>
 		    <select id = 'verified' class="form-control" name = 'verified'>
@@ -107,12 +106,13 @@
 		    	
 		    </select>
 		  </div> 
+@endif
 
 		  <div class="form-group">
 		  	<button type="submit" class="btn btn-primary">Update Job Post</button>
 		  </div>
 
 		
-	</form>
+</form>
 </body>
 </html>

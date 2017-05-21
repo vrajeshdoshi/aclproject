@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Jobtype;
 use App\Category;
 use App\LocationCity;
+use App\User;
 class JobpostController extends Controller
 {
     /**
@@ -52,6 +53,13 @@ class JobpostController extends Controller
         'package' => 'required',       
         ]);
 
+        $roles = User::find(Auth::user()->id)->roles;
+        $verified = 'No';
+        foreach($roles as $role)
+        {
+            if($role->name == 'Admin' || $role->name == 'Job Manager')
+                $verified = 'Yes';
+        }
 
         // Create and save the user
         
@@ -67,7 +75,8 @@ class JobpostController extends Controller
             'experience' => request('experience'),
             'category_id' => request('jobcategory'),
             'package' => request('package'),
-            'user_id' => Auth::user()->id           
+            'user_id' => Auth::user()->id,
+            'verified' => $verified,           
        ] );
 
 
@@ -82,15 +91,31 @@ class JobpostController extends Controller
         return redirect('/home');
     }
 
+
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Jobpost  $jobpost
      * @return \Illuminate\Http\Response
      */
-    public function show(Jobpost $jobpost)
+    public function show($id)
     {
+        $data = Jobpost::where('user_id',$id)->get();
+
+        $job_data = array();
+        $jobs = array();
+        foreach($data as $job)
+        {
+            $job_data['info'] = $job;
+            $job_data['user'] = $job->user->name;
+            $job_data['joblocations'] = $job->locationcity;
+            $job_data['jobcategory'] = $job->category->name;
+            $job_data['jobtypes'] = $job->jobtypes;
+            array_push($jobs, $job_data);
+        }
         
+       return view('myjobpost',compact('jobs'));
     }
 
     /**
@@ -163,12 +188,12 @@ class JobpostController extends Controller
        ] );
         //dd($job);
         $job = Jobpost::find($id);
-     $job->jobtypes()->detach();   
-$r = request('jobtype');
- $job->jobtypes()->attach($r);
-$job->locationcity()->detach(); 
- $q = request('joblocation');
- $job->locationcity()->attach($q);
+        $job->jobtypes()->detach();   
+        $r = request('jobtype');
+        $job->jobtypes()->attach($r);
+        $job->locationcity()->detach(); 
+        $q = request('joblocation');
+        $job->locationcity()->attach($q);
         return redirect('/display_posts');
     }
 
@@ -200,4 +225,22 @@ $job->locationcity()->detach();
         
         return view('jobsview', compact('jobs'));
     }
+
+    public function display_verified(){
+        $data = Jobpost::where('verified','Yes')->get();
+        $job_data = array();
+        $jobs = array();
+        foreach($data as $job)
+        {
+            $job_data['info'] = $job;
+            $job_data['user'] = $job->user->name;
+            $job_data['joblocations'] = $job->locationcity;
+            $job_data['jobcategory'] = $job->category->name;
+            $job_data['jobtypes'] = $job->jobtypes;
+            array_push($jobs, $job_data);
+        }
+        
+        return view('jobsview', compact('jobs'));
+    }
+
 }

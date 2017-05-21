@@ -46,6 +46,9 @@ Route::get('/create_post', 'JobpostController@create')->name('create_post');
 Route::post('/create_post', 'JobpostController@store')->name('create_post_store');
 
 Route::get('/display_posts', 'JobpostController@display')->name('display_posts');
+Route::get('/display_verified_posts', 'JobpostController@display_verified')->name('display_verified_posts');
+
+Route::get('/my_posts/{id}','JobpostController@show')->name('my_posts');
 
 Route::get('/edit_post/{id}', 'JobpostController@edit')->name('edit_post');
 Route::put('/update_post/{id}', 'JobpostController@update')->name('update_post');

@@ -19,15 +19,28 @@
                     <a href="{{ route('create_permission') }}">Create Permission</a> | 
                     <a href="{{ route('assign_permission') }}">Assign Permission To Role</a> | 
                     <a href="{{ route('revoke_permission') }}">Revoke Permission From Role</a> <br>
-                    <!-- <a href="{{ route('create_role') }}">Sync Permissions (Can be merged with Assign Permission)</a> |  -->
+@endif
+@ifUserIs('admin|job manager|job provider')                    
                     <h4>Job Posts</h4>
                     <a href="{{ route('create_post') }}">Create Job Post</a> |
-                    <a href="{{ route('display_posts') }}">View Job Posts</a>
-                    <br>
+                    <a href="{{route('my_posts', Auth::id())}}">View My Job Posts</a> |
+                    
+@endif
+@ifUserIs('admin|job manager')
+<a href="{{ route('display_posts') }}">View All Job Posts</a>
+<br>
+@endif
+@ifUserIs('job provider')
+<a href="{{ route('display_verified_posts') }}">View All Job Posts</a>
+<br>
+@endif
+@ifUserIs('admin|user manager')
                     <h4>Users</h4>
                     <a href="{{ route('create_user') }}">Create User</a> |
                     <a href="{{ route('display_users') }}">View User</a>
                     <br>
+@endif
+@ifUserIs('admin')
                     <h4>Job Types</h4>
                     <a href="{{ route('create_jobtype') }}">Create Job Types</a> |
                     <a href="{{ route('display_jobtypes') }}">View Job Types</a>
@@ -39,26 +52,13 @@
                     <h4>Job Location</h4>
                     <a href="{{ route('create_location') }}">Create Job Location</a> |
                     <a href="{{ route('display_locations') }}">View Job Location</a>
+@endif
                 </div>
             </div>
         </div>
     </div>
 </div>
-{{--@else
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
 
-                <div class="panel-body">
-                    <p>Your Role Has been Revoked as Admin Please Contact the System Administrator</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>--}}
-@endif
 @ifUserIs('job seeker')
 <div class="container">
     <div class="row">
@@ -127,24 +127,8 @@
         </div>
     </div>
 </div>
-@else
-
-<a href="{{ route('create_post') }}">Create Job Post</a> |
-<a href="{{ route('display_posts') }}">View Job Posts</a> 
 @endif
 @endif
-
-@ifUserIs('job manager')
-<a href="{{ route('create_post') }}">Create Job Post</a> |
-<a href="{{ route('display_posts') }}">View Job Posts</a> 
-@endif
-
-@ifUserIs('user manager')
-<a href="{{ route('create_post') }}">Create Job Post</a> |
-<a href="{{ route('display_posts') }}">View Job Posts</a> 
-@endif
-
-
 @endsection
 
 
