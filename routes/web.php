@@ -12,7 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	$data = array();
+	$company = App\Company::get();
+	$comp_cnt = count($company);
+	//array_push($data, $comp_cnt);
+	$countries = App\LocationCity::select('description')->distinct()->get()->count();
+	//array_push($data, $countries) ;
+	$jobpost_cnt = App\Jobpost::where('verified','yes')->get()->count();
+	//array_push($data, $jobpost_cnt);
+    return view('welcome', compact('comp_cnt','countries','jobpost_cnt'));
 });
 
 Auth::routes();
@@ -97,3 +105,26 @@ Route::get('/edit_location/{id}', 'LocationCityController@edit')->name('edit_loc
 Route::put('/update_location/{id}', 'LocationCityController@update')->name('update_location');
 
 Route::get('/delete_location/{id}', 'LocationCityController@destroy')->name('delete_location');
+
+Route::get('/verify_user/{token}/{id}', 'UserController@activate')->name('verify_user');
+
+Route::get('/register_info', function(){
+  return view('register_info');
+})->name('reg_info');
+
+Route::get('/verify_staff/{token}/{id}', 'UserController@activate_staff')->name('verify_staff');
+
+Route::put('/set_password/{id}','UserController@store_password')->name('store_password');
+
+Route::get('/display_company/{id}', 'CompanyController@show')->name('display_company');
+
+Route::get('/register_staff', function(){
+  return view('register_staff');
+})->name('reg_staff');
+
+Route::get('/edit_company/{id}', 'CompanyController@edit')->name('edit_company');
+Route::put('/update_company/{id}', 'CompanyController@update')->name('update_company');
+Route::get('/delete_company/{id}', 'CompanyController@destroy')->name('delete_company');
+
+
+

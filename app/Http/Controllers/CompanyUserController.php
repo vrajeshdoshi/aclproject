@@ -80,6 +80,6 @@ class CompanyUserController extends Controller
      */
     public function destroy(CompanyUser $companyUser)
     {
-        //
+           
     }
 }

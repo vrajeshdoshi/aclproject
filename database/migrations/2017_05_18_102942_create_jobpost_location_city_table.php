@@ -16,9 +16,9 @@ class CreateJobpostLocationCityTable extends Migration
         Schema::create('job_locationcities', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('jobpost_id')->index();
-            $table->foreign('jobpost_id')->references('id')->on('jobposts')->onDelete('cascade');
+           /* $table->foreign('jobpost_id')->references('id')->on('jobposts')->onDelete('cascade');*/
             $table->unsignedInteger('location_city_id')->index();
-            $table->foreign('location_city_id')->references('id')->on('location_cities')->onDelete('cascade');
+           /* $table->foreign('location_city_id')->references('id')->on('location_cities')->onDelete('cascade');*/
             $table->timestamps();
         });
     }

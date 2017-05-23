@@ -21,8 +21,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
      
-    public function companies(){
-        return $this->hasMany(Company::class);
+    public function company(){
+        return $this->hasOne(Company::class);
     }
 
     public function jobposts(){
@@ -32,6 +32,9 @@ class User extends Authenticatable
         return $this->hasMany(Jobtype::class);
     }
 
+    public function useractivation(){
+        return $this->hasOne(UserActivation::class);
+    }
     protected $guarded = [];
     /*protected $fillable = [
         'name', 'email', 'password',

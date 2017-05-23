@@ -20,7 +20,7 @@
                     <a href="{{ route('assign_permission') }}">Assign Permission To Role</a> | 
                     <a href="{{ route('revoke_permission') }}">Revoke Permission From Role</a> <br>
 @endif
-@ifUserIs('admin|job manager|job provider')                    
+@ifUserIs('admin|job manager')                    
                     <h4>Job Posts</h4>
                     <a href="{{ route('create_post') }}">Create Job Post</a> |
                     <a href="{{route('my_posts', Auth::id())}}">View My Job Posts</a> |
@@ -28,10 +28,6 @@
 @endif
 @ifUserIs('admin|job manager')
 <a href="{{ route('display_posts') }}">View All Job Posts</a>
-<br>
-@endif
-@ifUserIs('job provider')
-<a href="{{ route('display_verified_posts') }}">View All Job Posts</a>
 <br>
 @endif
 @ifUserIs('admin|user manager')
@@ -67,7 +63,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    <p>Helo  Seeker</p>
+                    <a href="{{ route('display_verified_posts') }}">View All Job Posts</a>
                 </div>
             </div>
         </div>
@@ -86,7 +82,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Company Name</label>
+                            <label for="name" class="col-md-4 control-label">Company Name*</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -99,8 +95,36 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                            <label for="address" class="col-md-4 control-label">Address*</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}" required autofocus>
+
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('website') ? ' has-error' : '' }}">
+                            <label for="website" class="col-md-4 control-label">Website</label>
+
+                            <div class="col-md-6">
+                                <input id="website" type="text" class="form-control" name="website" value="{{ old('website') }}" autofocus>
+
+                                @if ($errors->has('website'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('website') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">Company Description</label>
+                            <label for="description" class="col-md-4 control-label">Company Description*</label>
 
                             <div class="col-md-6">
                                 <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" required autofocus>
@@ -127,6 +151,12 @@
         </div>
     </div>
 </div>
+@else
+<h4>Job Posts</h4>
+                    <a href="{{ route('create_post') }}">Create Job Post</a> |
+                    <a href="{{route('my_posts', Auth::id())}}">View My Job Posts</a> |
+                    <a href="{{ route('display_verified_posts') }}">View All Job Posts</a>
+<br>
 @endif
 @endif
 @endsection

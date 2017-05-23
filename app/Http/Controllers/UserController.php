@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
-
+use App\UserActivation;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyStaff;
+use App\Jobpost;
 class UserController extends Controller
 {
     /**
@@ -26,6 +29,12 @@ class UserController extends Controller
         return view('user');
     }
 
+    public function quickRandom($length = 30)
+    {
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -36,23 +45,31 @@ class UserController extends Controller
     {
         $this->validate(request(),[
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',            
+            'email' => 'required|string|email|max:255|unique:users',            
         ]);
 
-
+       // 'password' => 'required|string|min:6|confirmed',            
         // Create and save the user
         
         // 1. User::create or
         // 2. User::register
 
         //$user=User::create(request(['name','email','password']));
+            $pass = $this->quickRandom(6);
         $user =User::create([
             'name' => request('name'),
             'email' => request('email'),
-            'password' => bcrypt(request('password')),            
+            'password' => $pass,            
             'verified' => "Yes",
-       ] );      
+       ] ); 
+
+       $tokenData = $this->quickRandom();
+        $activationtoken = UserActivation::create([
+                'user_id' => $user->id,
+                'token' => $tokenData,
+            ]);
+       // dd($tokenData);
+        Mail::to($user->email)->send(new VerifyStaff($tokenData,$user->name,$activationtoken->id,$pass,request('email')));    
         // $User = new User();
         // $User->name = request('name');
         // $User->email = request('email');
@@ -129,6 +146,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::where('id',$id)->delete();
+        Jobpost::where('user_id',$id)->delete();
         return redirect('/display_users');
     }
 
@@ -144,10 +162,77 @@ class UserController extends Controller
              foreach($role_data as $role){
                 array_push($role_array, $role);
              }
-
-            $user_array = array('user_id'=>$user->id,'user_name'=>$user->name, 'user_email'=>$user->email,'role'=>$role_array);
+             $company = $user->company;             
+            $user_array = array('user_id'=>$user->id,'user_name'=>$user->name, 'user_email'=>$user->email,'role'=>$role_array,'company'=>$company);
             array_push($datas, $user_array);
             }
             return view('usersview', ['users' => $datas]);
     }
+
+    public function activate($token,$id){
+        $tokendata = UserActivation::where('token',$token)->find($id);
+        if($tokendata != null){
+           // dd($tokendata->user_id);
+            UserActivation::where('user_id',$tokendata->user_id)->forceDelete();           
+            $token = User::where('id', $tokendata->user_id)->update([
+            'is_activated' => 1            
+       ] );
+        return redirect('/login');
+        }
+        else{
+            return view('redirection');
+        }
+    }
+
+    public function activate_staff($token,$id){
+        $tokendata = UserActivation::where('token',$token)->find($id);
+        if($tokendata != null){           
+           // UserActivation::where('user_id',$tokendata->user_id)->forceDelete();           
+           /* $token = User::where('id', $tokendata->user_id)->update([
+            'is_activated' => 1            
+       ] );*/
+            $user_id = $tokendata->user_id;
+           // dd($user_id);
+            return view('set_password', compact('user_id'));
+        }
+        else{
+            return view('redirection');
+        }
+    }
+
+    
+    public function store_password(Request $request, $id){
+
+       // UserActivation::where('user_id',$id)->forceDelete();
+        $this->validate($request,[
+        'pass' => 'required',
+        'password' => 'required|string|min:6|confirmed',      
+        ]);
+
+
+
+        // Create and save the user
+        
+        // 1. User::create or
+        // 2. User::register
+        //dd(request('password')." ".request('new_password'));
+        
+        $user=User::where('password', request('pass'))->update([
+            'is_activated' => 1,            
+            'password' => bcrypt(request('password')),            
+       ] );
+       // dd($user);
+       if($user == 0)
+       {
+        $data = "Your Password was incorrect. Please retry";
+        return back()->withInput();
+       }
+       else{
+        UserActivation::where('user_id',$id)->forceDelete();           
+        return redirect('/login');
+       }
+
+        
+    }
+
 }

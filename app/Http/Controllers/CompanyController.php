@@ -6,6 +6,7 @@ use App\Company;
 use Illuminate\Http\Request;
 //use App\CompanyUser;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 class CompanyController extends Controller
 {
     /**
@@ -38,6 +39,7 @@ class CompanyController extends Controller
     {
         $this->validate(request(),[
         'name' => 'required',
+        'address' => 'required',
         'description' => 'required'        
         ]);
 
@@ -49,8 +51,10 @@ class CompanyController extends Controller
 
         //$user=User::create(request(['name','email','password']));
         $company = Company::create([
-            'company' => request('name'),            
+            'company' => request('name'),         
+            'address' => request('address'),   
             'comp_desc' => request('description'),
+            'website' => request('website'),
             'user_id' => Auth::user()->id          
        ] );
 
@@ -68,9 +72,20 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show($id)
     {
-        //
+            $datas = array();
+           // $company_array = array();
+            $company_data = Company::where('user_id',$id)->get();
+
+            foreach($company_data as $company){
+
+             $user_name = $company->user->name;
+             $user_email = $company->user->email;            
+                        
+             $company_array = array('company'=>$company,'user_name'=>$user_name, 'user_email'=>$user_email);            
+            }
+            return view('company_view', ['companies' => $company_array]);
     }
 
     /**
@@ -79,9 +94,11 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
-        //
+         $company = Company::find($id);
+        //dd($job);
+        return view('edit_company',compact('company'));
     }
 
     /**
@@ -91,9 +108,32 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+        'company' => 'required',        
+        'comp_desc' => 'required', 
+        'address' => 'required'                
+        ]);
+       
+        if(request('website') == '')
+        {
+            $company=Company::where('id', $id)->update([
+            'company' => request('company'),
+            'comp_desc' => request('comp_desc'),              
+            'address' => request('address')            
+       ] );
+        }
+        else{        
+        $company=Company::where('id', $id)->update([
+            'company' => request('company'),
+            'comp_desc' => request('comp_desc'),              
+            'address' => request('address'),
+            'website' => request('website')          
+       ] );
+    }
+        //return Redirect::route('display_company, $id');
+       return redirect('/display_users');
     }
 
     /**
@@ -102,8 +142,17 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
-        //
+        $comp = Company::where('id',$id)->get();
+        $user_id = $comp->first()->user_id;
+        $company = Company::where('id',$id)->delete();
+
+        $user = User::where('id',$user_id)->delete();
+        return redirect('/display_users');
+    }
+
+    public function display_company(){
+            
     }
 }

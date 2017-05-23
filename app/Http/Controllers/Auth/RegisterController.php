@@ -10,6 +10,9 @@ use App\RoleUser;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Role;
+use App\UserActivation;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyUser;
 class RegisterController extends Controller
 {
     /*
@@ -30,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/register_info';
 
     /**
      * Create a new controller instance.
@@ -74,6 +77,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
+    public function quickRandom($length = 30)
+    {
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+    }
+
     protected function create(array $data)
     {
         $user = User::create([
@@ -94,6 +104,31 @@ class RegisterController extends Controller
             Session::put('role_name', 'Job Provider');
             // Session('role_id');          
         }
+
+        $tokenData = $this->quickRandom();
+        $activationtoken = UserActivation::create([
+                'user_id' => $user->id,
+                'token' => $tokenData,
+            ]);
+       // dd($tokenData);
+        Mail::to($user->email)->send(new VerifyUser($tokenData,$user->name,$activationtoken->id));
+
         return $user;
+        // return redirect('/reg_info');
+        // return redirect()->to('/reg_info');
+       // return redirect()->route('reg_info');
     }
+
+    /*public function activate($token, $id){
+        $tokendata = UserActivation::where('token',$token)->find($id);
+        if($tokendata != null){
+            UserActivation::where('id',$tokendata->userid)->delete();            
+            $token = User::where('id', $tokendata->user_id)->update([
+            'is_activated' => 1            
+       ] );
+        }
+        else{
+            return view('redirection');
+        }
+    }*/
 }

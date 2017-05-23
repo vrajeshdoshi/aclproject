@@ -16,9 +16,9 @@ class CreateJobpostJobtypeTable extends Migration
         Schema::create('jobpost_jobtypes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('jobpost_id')->index();
-            $table->foreign('jobpost_id')->references('id')->on('jobposts')->onDelete('cascade');
+           /* $table->foreign('jobpost_id')->references('id')->on('jobposts')->onDelete('cascade');*/
             $table->unsignedInteger('jobtype_id')->index();
-            $table->foreign('jobtype_id')->references('id')->on('jobtypes')->onDelete('cascade');
+           /* $table->foreign('jobtype_id')->references('id')->on('jobtypes')->onDelete('cascade');*/
             $table->timestamps();
         });
     }

@@ -36,6 +36,9 @@
         <tr>
             <td>
                 {{$user['user_name']}}
+@if(count($user['company']) > 0)
+        <a href="{{ route('display_company',$user['user_id']) }}">Company</a>                
+@endif
             </td>
             <td>
                 <ol style="list-style-type:none;">
