@@ -24,18 +24,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Select Country</label>
-                            <select id = 'description' class="form-control" name = 'description' style = "width:50%">               
-                                <option value = "India">India</option>
-                                <option value = "China">China</option>
-                                <option value = "USA">USA</option>             
-                                <option value = "Germany">Germany</option>  
-                                <option value = "Australia">Australia</option>                     
-                            </select>
-                        </div>  
-
-                      {{--  <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label for="description" class="col-md-4 control-label">Job Country</label>
 
                             <div class="col-md-6">
@@ -47,7 +36,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>--}}
+                        </div>
 
 
                         <div class="form-group">

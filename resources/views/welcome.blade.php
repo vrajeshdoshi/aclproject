@@ -79,13 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    MT Job Portal
-                </div>
-
-                <div class="links">
-                    <p>Number of Job Posts : {{$jobpost_cnt}}</p>
-                    <p>Number of Companies Registered : {{$comp_cnt}}</p>
-                    <p>Number of Countries : {{$countries}}</p>
+                    ACL Job-Portal
                 </div>
             </div>
         </div>
