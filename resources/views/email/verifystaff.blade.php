@@ -1,5 +1,5 @@
 <h2>
-Hello {{$user}}! Your account has been created MT Job Portal.
+Hello {{$user}}! Your account has been created Job Portal.
 Your Login credentials are:<br>
 Email: {{$email}} <br>
 One Time Password: {{$password}}<br>

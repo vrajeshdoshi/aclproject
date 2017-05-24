@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    MT Job Portal
+                    Job Portal
                 </div>
 
                 <div class="links">

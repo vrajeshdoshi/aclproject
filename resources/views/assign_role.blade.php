@@ -22,7 +22,7 @@
 </ul> -->
 
 
-	<form method="POST" action="/assign_role">
+	<form method="POST" action="{{route('a_r')}}">
 			{{csrf_field()}}
 		  <div class="form-group">
 		    <label for="user_id">Select User</label>

@@ -45,7 +45,8 @@
     				 	<span style={width:600px}>
     				 	{{$rol['name']}}
     				 	</span>
-    				 	<a href="/revoke_role/{{$rol['id']}}/{{$user['user_id']}}">Revoke</a>
+						<a href="{{route('revoke.role',['user_id'=>$rol['id'], 'role_id'=>$user['user_id']])}}">Revoke</a>
+    				 	
     				 {{--	<a href="/revoke_role/{{$rol['id']}}/{{$user['user_id']}}" class="btn btn-success btn-xs ">&nbsp;X&nbsp;</a>--}}
     				 	
     				 </li>
@@ -59,10 +60,9 @@
     		     		     				@foreach($user['role'] as $rol)
     		     		     				
     		     		     			
-    		     		     				 <li>
-    		     		     				 	    				 	
-    		     		     				 	<a href="/revoke_role/{{$rol['id']}}/{{$user['user_id']}}">Revoke</a>
-    		     		     				 	
+    		     		     				 <li>    		     		     				 	    				 	
+    		     		     				 											
+    		     		     				 	<a href="{{route('revoke.role',['user_id'=>$rol['id'], 'role_id'=>$user['user_id']])}}">Revoke</a>
     		     		     				 </li>
     		     		     				 
     		     		     				 @endforeach

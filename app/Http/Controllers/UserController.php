@@ -14,6 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	  public function __construct()
+    {
+        $this->middleware('auth',['only'=>['create','store','edit','update','destroy','display'],'except'=>['store_password','activate_staff','activate']]);
+		$this->middleware('guest',['except'=>['create','store','edit','update','destroy','display'],'only'=>['store_password','activate_staff','activate']]);
+    }
     public function index()
     {
         //
@@ -115,8 +120,8 @@ class UserController extends Controller
     {
 
         $this->validate($request,[
-        'name' => 'required',
-        'email' => 'required|string|email|max:255|unique:users,id,'.$id,        
+        'name' => 'required|alpha|string|max:150',
+        'email' => 'required|string|email|max:150|unique:users,id,'.$id,        
         'verified' => 'required',                 
         ]);
 

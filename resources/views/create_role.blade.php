@@ -8,7 +8,7 @@
 <body>
 	<h1>Create A Role <a href="{{route('home')}}">Home</a></h1> 
 
-	<form method="POST" action="/create_role">
+	<form method="POST" action="{{route('c_r')}}">
 			{{csrf_field()}}
 		  <div class="form-group">
 		    <label for="name">User Role</label>

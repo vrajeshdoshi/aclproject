@@ -8,7 +8,7 @@
 <body>
 	<h1>Create Permission <a href="{{route('home')}}">Home</a></h1> 
 
-	<form method="POST" action="/create_permission">
+	<form method="POST" action="{{route('c_p')}}">
 			{{csrf_field()}}
 		  <div class="form-group">
 		    <label for="name">Permission Title</label>

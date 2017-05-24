@@ -17,7 +17,7 @@
     <h1>Users <a href="{{route('home')}}">Home</a></h1> 
 
 
-    <form method="POST" action="/revoke_role">
+    <form method="POST" action="{{route('revoke_role')}}">
             {{csrf_field()}}
     <div class="form-group">
          <table class="table">
@@ -60,11 +60,12 @@
              <td>
                 {{$user['user_email']}}
              </td>
+@ifUserCan('user.delete')
              <td>
              <a href="{{route('edit_user', $user['user_id'])}}">Edit</a>
              <a href="{{route('delete_user', $user['user_id'])}}">Delete</a>
              </td>
-   
+@endif   
     </tr>
     @endforeach        
     </tbody>

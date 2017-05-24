@@ -37,7 +37,9 @@
     				 	<span style={width:600px}>
     				 	{{$per['name']}}
     				 	</span>
-    				 	<a href="/revoke_permission/{{$per['id']}}/{{$role['role_id']}}">Revoke</a>
+						
+						
+    				 	<a href="{{route('revoke.permission',['user_id'=>$per['id'], 'role_id'=>$role['role_id']])}}">Revoke</a>
     				 	
     				 </li>
     				 

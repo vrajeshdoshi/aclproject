@@ -11,7 +11,7 @@
 
 
 
-	<form method="POST" action="/assign_permission">
+	<form method="POST" action="{{route('a_p')}}">
 			{{csrf_field()}}
 		  <div class="form-group">
 		    <label for="role_id">Select Role</label>
