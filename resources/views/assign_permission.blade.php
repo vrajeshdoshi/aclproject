@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/poststyle.css">
-</head>
-<body>
-	<h1>Assign Permission to Role <a href="{{route('home')}}">Home</a></h1> 
+@extends('layouts.app')
 
+@section('content')
 
+<section class="content">
+    <div class="container-fluid">
+    	<div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                <div class="card">
+                    <div class="header bg-red">
+                        <h2 align="center">Assign Permission</h2>
+                    </div>
+                    <div class="body">
+                        <form method="POST" action="{{route('c_r')}}">
+                        {{csrf_field()}}
+                        	<div>
+                        	<label for="user_id">Select Role</label>
+	                            <select id = 'role_id' name = 'role_id' class="form-control show-tick" data-live-search="true">
+	                                @foreach($roleData as $role)
+						                <option value = {{ $role->id }}>{{$role->name}}</option>
+						            @endforeach
+	                            </select>
+                            </div>
+                            <br/>
+                            <div>
+                            	<label for="role_id">Select Permission</label>
+                                <select id = 'permission_id' name = 'permission_id[]' class="form-control show-tick" multiple>
+                                    @foreach($permissionData as $permission)
+						                <option value = {{ $permission->id }}>{{$permission->name}}</option>
+						            @endforeach
+                                </select>
+                            </div>
 
-
-	<form method="POST" action="{{route('a_p')}}">
-			{{csrf_field()}}
-		  <div class="form-group">
-		    <label for="role_id">Select Role</label>
-		    <select id = 'role_id' class="form-control" name = 'role_id'>
-		    @foreach($roleData as $role)
-		    	<option value = {{ $role->id }}>{{$role->name}}</option>				
-			@endforeach		   
-		    </select>
-		  </div>  
-
-		  <div class="form-group">
-		    <label for="permission_id">Select Permission</label>
-		    <select id = 'permission_id' class="form-control" name = 'permission_id[]' multiple>
-		    
-
-		    @foreach($permissionData as $permission)
-		    	<option value = {{ $permission->id }}>{{$permission->name}}</option>				
-			@endforeach
-		    </select>
-		  </div>  
-		  		
-		  <div class="form-group">
-		  	<button type="submit" class="btn btn-primary">Assign Permission To Role</button>
-		  </div>
-
-		
-	</form>
-</body>
-</html>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Assign Permission To Role</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection

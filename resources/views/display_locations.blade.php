@@ -1,60 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/poststyle.css">
-    <style>
-        .btn{
-            width:15px;
-            height:20px;
-            background-color: red;
-            padding:10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Job Locations <a href="{{route('home')}}">Home</a></h1> 
+@extends('layouts.app')
 
-
-    <form method="POST" action="/revoke_role">
-            {{csrf_field()}}
-    <div class="form-group">
-         <table class="table">
-    <thead>
-
-      <tr>
-        <th>Job City</th>
-        <th>Job Country</th>
-        <th>Manage Locations</th>        
-       {{-- <th>Revoke Role</th>        --}}
-      </tr>
-    </thead>
-    <tbody>
-        @foreach($locations as $location)
-        <tr>
-            <td>
-                {{$location['name']}}
-            </td>
-            <td>
-               {{$location['description']}}
-             </td>
-            
-             <td>
-             <a href="{{route('edit_location', $location['id'])}}">Edit</a>&nbsp;&nbsp;&nbsp;
-             <a href="{{route('delete_location', $location['id'])}}">Delete</a>
-             </td>
-   
-    </tr>
-    @endforeach        
-    </tbody>
-  </table>
-    </div>          
-          <!-- <div class="form-group">
-            <button type="submit" class="btn btn-primary">Revoke Role</button>
-          </div> -->
-
-        
-    </form>
-</body>
-</html>
+@section('content')
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                <div class="card ">
+                    <div class="header bg-red">
+                        <h2 align="center">Job Categories</h2>
+                    </div>
+                    <div class="body table-responsive">
+                            <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Job City</th>
+                                    <th>Job Country</th>
+                                    <th>Manage Locations</th>
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                            @foreach($locations as $location)
+                                <tr>
+                                    <td>
+                                        {{$location['name']}}
+                                    </td>
+                                    <td>
+                                       {{$location['description']}}
+                                    </td>
+                                    
+                                    <td>
+                                        <a type="button" class="btn bg-light-blue waves-effect" href="{{route('edit_location', $location['id'])}}"><i class="material-icons">edit</i></a> &nbsp;&nbsp;&nbsp;&nbsp; 
+                                        <a type="button" class="btn bg-red waves-effect" href="{{route('delete_location', $location['id'])}}"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            @endforeach               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection

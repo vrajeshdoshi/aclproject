@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/poststyle.css">
-</head>
-<body>
-	<h1>Create A Role <a href="{{route('home')}}">Home</a></h1> 
+@extends('layouts.app')
 
-	<form method="POST" action="{{route('c_r')}}">
-			{{csrf_field()}}
-		  <div class="form-group">
-		    <label for="name">User Role</label>
-		    <input type="text" class="form-control" id="name" name="name">
-		  </div>  
-		  <div class="form-group">
-		    <label for="description">Description</label>
-		    <input type="text" class="form-control" id="description" name="description">
-		  </div> 		
-		  <div class="form-group">
-		  	<button type="submit" class="btn btn-primary">Create Role</button>
-		  </div>
+@section('content')
 
-		
-	</form>
-</body>
-</html>
+<section class="content">
+    <div class="container-fluid">
+    	<div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                <div class="card">
+                    <div class="header bg-red">
+                        <h2 align="center">Create A Role</h2>
+                    </div>
+                    <div class="body">
+                        <form method="POST" action="{{route('c_r')}}">
+                        {{csrf_field()}}
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" id="name" name="name">
+                                    <label class="form-label">Name</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea rows="1" class="form-control no-resize" id="description" name="description"></textarea>
+                                    <label class="form-label">Description</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Create Role</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection

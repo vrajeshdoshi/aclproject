@@ -1,56 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/poststyle.css">
-</head>
-<body>
-	<h1>Assign Role to User <a href="{{route('home')}}">Home</a></h1> 
+@extends('layouts.app')
 
+@section('content')
 
-<!-- <ul>
-<?php foreach($userData as $user):?>
-	<li><?= $user->id.' '.$user->name; ?></li>
-<?php endforeach; ?>
-</ul>
+<section class="content">
+    <div class="container-fluid">
+    	<div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                <div class="card">
+                    <div class="header bg-red">
+                        <h2 align="center">Assign Role</h2>
+                    </div>
+                    <div class="body">
+                        <form method="POST" action="{{route('a_r')}}">
+                        {{csrf_field()}}
+                        	<div>
+                        	<label for="user_id">Select User</label>
+	                            <select id = 'user_id' name = 'user_id' class="form-control show-tick" data-live-search="true">
+	                                 @foreach($userData as $user)
+						                <option value = {{ $user->id }}>{{$user->name}}</option>     
+						            @endforeach
+	                            </select>
+                            </div>
+                            <br/>
+                            <div>
+                            	<label for="role_id">Select Role</label>
+                                <select id = 'role_id' name = 'role_id[]' class="form-control show-tick" multiple>
+                                    @foreach($roleData as $role)
+                						<option value = {{ $role->id }}>{{$role->name}}</option>
+            						@endforeach
+                                </select>
+                            </div>
 
-<ul>
-<?php foreach($roleData as $role):?>
-	<li><?= $role->id.' '.$role->name; ?></li>
-<?php endforeach; ?>
-</ul> -->
-
-
-	<form method="POST" action="{{route('a_r')}}">
-			{{csrf_field()}}
-		  <div class="form-group">
-		    <label for="user_id">Select User</label>
-		    <select id = 'user_id' class="form-control" name = 'user_id'>
-		    
-
-		    @foreach($userData as $user)
-		    	<option value = {{ $user->id }}>{{$user->name}}</option>				
-			@endforeach
-		    </select>
-		  </div>  
-
-		  <div class="form-group">
-		    <label for="role_id">Select Role</label>
-		    <select id = 'role_id' class="form-control" name = 'role_id[]' multiple>
-		    
-
-		    @foreach($roleData as $role)
-		    	<option value = {{ $role->id }}>{{$role->name}}</option>				
-			@endforeach
-		    </select>
-		  </div>  
-		  		
-		  <div class="form-group">
-		  	<button type="submit" class="btn btn-primary">Assign Role</button>
-		  </div>
-
-		
-	</form>
-</body>
-</html>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Create Role</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection
