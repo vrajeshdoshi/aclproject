@@ -1,41 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/poststyle.css">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Revoke Role</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="css/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="css/animate.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="css/all-themes.css" rel="stylesheet" />
     <style>
-        .btn{
-            width:15px;
-            height:20px;
-            background-color: red;
-            padding:10px;
+        .cust {
+            margin-top: 100px;
+            margin-left: 310px;
         }
     </style>
 </head>
-<body>
-    <h1>Users <a href="{{route('home')}}">Home</a></h1> 
 
-
-    <form method="POST" action="{{route('revoke_role')}}">
-            {{csrf_field()}}
-    <div class="form-group">
-         <table class="table">
-    <thead>
-
-      <tr>
-        <th>Users</th>
-        <th style="padding-left: 50px">Roles</th>
-        <th>Email</th>
-        <th>Manage Users</th>
-       {{-- <th>Revoke Role</th>        --}}
-      </tr>
-    </thead>
-    <tbody>
-        @foreach($users as $user)
+<body class="theme-red">
+    <div class="content">
+        {{--
+        <h1>Revoke Role From User <a href="{{route('home')}}">Home</a></h1> --}}
+        <!-- <div class="container-fluid"> -->
+        <!-- <div class="row clearfix"> -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 cust">
+            <div class="card">
+                <div class="header">
+                    <h2>Users <a href="{{route('home')}}">Home</a></h2>
+                </div>
+                <div class="body table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Company</th>
+                                <th style="padding-left: 50px">Roles</th>
+                                <th>Email</th>
+                                <th>Manage Users</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
         <tr>
             <td>
                 {{$user['user_name']}}
+            </td>
+            <td>
 @if(count($user['company']) > 0)
         <a href="{{ route('display_company',$user['user_id']) }}">Company</a>                
 @endif
@@ -62,20 +84,21 @@
              </td>
 @ifUserCan('user.delete')
              <td>
-             <a href="{{route('edit_user', $user['user_id'])}}">Edit</a>
+             <a href="{{route('edit_user', $user['user_id'])}}">Edit</a> &nbsp;&nbsp; | &nbsp;&nbsp;  
              <a href="{{route('delete_user', $user['user_id'])}}">Delete</a>
              </td>
 @endif   
     </tr>
-    @endforeach        
-    </tbody>
-  </table>
-    </div>          
-          <!-- <div class="form-group">
-            <button type="submit" class="btn btn-primary">Revoke Role</button>
-          </div> -->
+    @endforeach  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+    </div>
 
-        
-    </form>
 </body>
+
 </html>

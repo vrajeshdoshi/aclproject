@@ -61,10 +61,11 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
-
+                @ifUserCan('jobpost.view')
                 <div class="panel-body">
                     <a href="{{ route('display_verified_posts') }}">View All Job Posts</a>
                 </div>
+                @endif
             </div>
         </div>
     </div>

@@ -1,90 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/poststyle.css">
-	<style>
-		.btn{
-			width:15px;
-			height:20px;
-			background-color: red;
-			padding:10px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Revoke Role</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="css/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="css/animate.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="css/all-themes.css" rel="stylesheet" />
+    <style>
+        .cust {
+            margin-top: 100px;
+            margin-left: 310px;
+        }
+    </style>
 </head>
-<body>
-	<h1>Revoke Role From User <a href="{{route('home')}}">Home</a></h1> 
 
+<body class="theme-red">
+    <div class="content">
+        {{--
+        <h1>Revoke Role From User <a href="{{route('home')}}">Home</a></h1> --}}
+        <!-- <div class="container-fluid"> -->
+        <!-- <div class="row clearfix"> -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 cust">
+            <div class="card">
+                <div class="header">
+                    <h2>Revoke Role From User <a href="{{route('home')}}">Home</a></h2>
+                </div>
+                <div class="body table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>USER</th>
+                                <th style="padding-left: 300px">ROLE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                            <tr>
+                                <td>
+                                    {{$user['user_name']}}
+                                </td>
+                                <td>
+                                    <ol style="list-style-type:none;">
+                                        @foreach($user['role'] as $rol)
 
-	<form method="POST" action="/revoke_role">
-			{{csrf_field()}}
-	<div class="form-group">
-		 <table class="table">
-    <thead>
+                                        <li style="padding-left: 230px">
+                                            <span style={width:600px}>
+                                            {{$rol['name']}}
+                                            </span>
+                                            <a href="{{route('revoke.role',['user_id'=>$rol['id'], 'role_id'=>$user['user_id']])}}">Revoke</a>
 
-      <tr>
-        <th>Users</th>
-        <th style="padding-left: 50px">Roles</th>
-       {{-- <th>Revoke Role</th>        --}}
-      </tr>
-    </thead>
-    <tbody>
-    	@foreach($users as $user)
-    	<tr>
-    		<td>
-    			{{$user['user_name']}}
-    		</td>
-    		<td>
-    			<ol style="list-style-type:none;">
-    				@foreach($user['role'] as $rol)
-    				
-    			
-    				 <li>
-    				 	
-    				 	<span style={width:600px}>
-    				 	{{$rol['name']}}
-    				 	</span>
-						<a href="{{route('revoke.role',['user_id'=>$rol['id'], 'role_id'=>$user['user_id']])}}">Revoke</a>
-    				 	
-    				 {{--	<a href="/revoke_role/{{$rol['id']}}/{{$user['user_id']}}" class="btn btn-success btn-xs ">&nbsp;X&nbsp;</a>--}}
-    				 	
-    				 </li>
-    				 
-    				 @endforeach
-    			</ol>
-    		 </td>
+                                        </li>
+                                        @endforeach
+                                    </ol>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+    </div>
 
-    		 {{--<td>
-    		     		     		 <ol style= "list-style-type:none;">
-    		     		     				@foreach($user['role'] as $rol)
-    		     		     				
-    		     		     			
-    		     		     				 <li>    		     		     				 	    				 	
-    		     		     				 											
-    		     		     				 	<a href="{{route('revoke.role',['user_id'=>$rol['id'], 'role_id'=>$user['user_id']])}}">Revoke</a>
-    		     		     				 </li>
-    		     		     				 
-    		     		     				 @endforeach
-    		     		     			</ol>
-    		     		     		 </td>--}}
-   {{-- @foreach($users as $user)  
-    <tr>
-    <td>{{$user['email']}}</td>
-	<td>{{$user['role']}}</td>
-	<td><a href="/revoke_role/{{$user['id']}}/{{$user['userId']}}" class="btn btn-success btn-xs">&nbsp;Delete&nbsp;</a></td>
-	</tr>    	
-	@endforeach --}} 
-	</tr>
-	@endforeach        
-    </tbody>
-  </table>
-	</div>	  		
-		  <!-- <div class="form-group">
-		  	<button type="submit" class="btn btn-primary">Revoke Role</button>
-		  </div> -->
-
-		
-	</form>
 </body>
+
 </html>
